@@ -1,18 +1,25 @@
+'''
+importing modules 
+'''
 from flask import Flask, request, render_template
 from emotion_detector import emotion_detector
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    '''
+    default landing page route
+    '''
     return render_template('index.html')
 
 @app.route('/emotionDetector', methods=['GET'])
 def emotion_detector_route():
+    '''
+    sentiment analysis route
+    '''
     text_to_analyze = request.args.get('textToAnalyze')
     result = emotion_detector(text_to_analyze)
-
-    if result.get("dominant_emotion") is None:
-        return "Invalid text! Please try again!"
 
     formatted_result = (
         f"For the given statement, the system response is "
